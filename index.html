@@ -2390,26 +2390,41 @@
         window.addEventListener('load', updateActiveSection);
 
         async function loadBlockMineStats() {
-            try {
-                const res = await fetch('http://185.65.200.184:3000/api/stats');
-                const data = await res.json();
+            const apiUrls = [
+                'https://185.65.200.184:3000/api/stats',
+                'https://corsproxy.io/?http://185.65.200.184:3000/api/stats',
+                'https://api.allorigins.win/raw?url=http://185.65.200.184:3000/api/stats'
+            ];
 
-                const onlineEl = document.getElementById('stat-bots-online');
-                if (onlineEl && data.online_bots_count !== undefined) {
-                    onlineEl.textContent = data.online_bots_count;
-                }
+            for (const url of apiUrls) {
+                try {
+                    const res = await fetch(url);
+                    if (!res.ok) continue;
 
-                const totalEl = document.getElementById('stat-total-bots');
-                if (totalEl && data.total_unique_bots_ever !== undefined) {
-                    totalEl.textContent = data.total_unique_bots_ever + '+';
+                    const data = await res.json();
+
+                    const onlineEl = document.getElementById('stat-bots-online');
+                    if (onlineEl && data.online_bots_count !== undefined) {
+                        onlineEl.textContent = data.online_bots_count;
+                    }
+
+                    const totalEl = document.getElementById('stat-total-bots');
+                    if (totalEl && data.total_unique_bots_ever !== undefined) {
+                        totalEl.textContent = data.total_unique_bots_ever;
+                    }
+
+                    return;
+                } catch(e) {
+                    console.log(`Failed to load from ${url}:`, e);
+                    continue;
                 }
-            } catch(e) {
-                console.log('Failed to load BlockMine stats:', e);
-                const onlineEl = document.getElementById('stat-bots-online');
-                const totalEl = document.getElementById('stat-total-bots');
-                if (onlineEl) onlineEl.textContent = '30+';
-                if (totalEl) totalEl.textContent = '400+';
             }
+
+            console.log('All API attempts failed, using fallback values');
+            const onlineEl = document.getElementById('stat-bots-online');
+            const totalEl = document.getElementById('stat-total-bots');
+            if (onlineEl) onlineEl.textContent = '30';
+            if (totalEl) totalEl.textContent = '400';
         }
         loadBlockMineStats();
         setInterval(loadBlockMineStats, 30000);
