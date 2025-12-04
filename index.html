@@ -458,6 +458,20 @@
             font-size: 0.9rem;
         }
 
+        .loading-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: loadingPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes loadingPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
         /* ==================== FEATURES GRID ==================== */
         .features-grid {
             display: grid;
@@ -1425,7 +1439,7 @@
         <div class="container">
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-value">60+</div>
+                    <div class="stat-value" id="stat-nodes">60+</div>
                     <div class="stat-label">Типов нодов</div>
                 </div>
                 <div class="stat-card">
@@ -1433,12 +1447,16 @@
                     <div class="stat-label">Плагинов</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">11</div>
-                    <div class="stat-label">Типов событий</div>
+                    <div class="stat-value" id="stat-bots-online">
+                        <span class="loading-dot"></span>
+                    </div>
+                    <div class="stat-label">Ботов онлайн</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value">MIT</div>
-                    <div class="stat-label">Лицензия</div>
+                    <div class="stat-value" id="stat-total-bots">
+                        <span class="loading-dot"></span>
+                    </div>
+                    <div class="stat-label">Создано ботов</div>
                 </div>
             </div>
         </div>
@@ -2315,6 +2333,36 @@
 
         window.addEventListener('scroll', updateActiveSection);
         window.addEventListener('load', updateActiveSection);
+
+        // ==================== LOAD BLOCKMINE STATS ====================
+        async function loadBlockMineStats() {
+            try {
+                const res = await fetch('http://185.65.200.184:3000/api/stats');
+                const data = await res.json();
+
+                // Update online bots count
+                const onlineEl = document.getElementById('stat-bots-online');
+                if (onlineEl && data.online_bots_count !== undefined) {
+                    onlineEl.textContent = data.online_bots_count;
+                }
+
+                // Update total bots created
+                const totalEl = document.getElementById('stat-total-bots');
+                if (totalEl && data.total_unique_bots_ever !== undefined) {
+                    totalEl.textContent = data.total_unique_bots_ever + '+';
+                }
+            } catch(e) {
+                console.log('Failed to load BlockMine stats:', e);
+                // Fallback values
+                const onlineEl = document.getElementById('stat-bots-online');
+                const totalEl = document.getElementById('stat-total-bots');
+                if (onlineEl) onlineEl.textContent = '30+';
+                if (totalEl) totalEl.textContent = '400+';
+            }
+        }
+        loadBlockMineStats();
+        // Refresh stats every 30 seconds
+        setInterval(loadBlockMineStats, 30000);
     </script>
 </body>
 </html>
