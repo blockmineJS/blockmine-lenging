@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlockMine - self-hosting для создания своих minecraft ботов</title>
-    <meta name="description" content="No-code платформа для Minecraft с визуальным редактором, 80+ типами нод, AI-ассистентом и плагинами которое делает сообщество">
+    <meta name="description" content="BlockMine — удобная система для создания и управления ботами Minecraft без программирования. Плагины от сообщества, визуальный редактор и запуск в один клик. Self-hosting для создания своих minecraft ботов">
     <link rel="icon" type="image/png" href="public/image/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -40,7 +40,6 @@
             overflow-x: hidden;
         }
 
-        /* Background Effects */
         .bg-effects {
             position: fixed;
             inset: 0;
@@ -67,7 +66,6 @@
             50% { transform: translate(-3%, -3%); }
         }
 
-        /* Container */
         .container {
             max-width: 1300px;
             margin: 0 auto;
@@ -80,7 +78,6 @@
             padding: 0 24px;
         }
 
-        /* Header */
         header {
             position: fixed;
             top: 0;
@@ -180,7 +177,6 @@
             gap: 12px;
         }
 
-        /* Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -233,7 +229,6 @@
             transform: translateY(-2px);
         }
 
-        /* Section Styles */
         section {
             padding: 100px 0;
             position: relative;
@@ -281,7 +276,6 @@
             margin: 0 auto;
         }
 
-        /* ==================== HERO ==================== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -371,7 +365,6 @@
 
         .hero-command button:hover { background: #9333ea; }
 
-        /* Video Section */
         .video-showcase {
             padding: 40px 0 100px;
         }
@@ -422,7 +415,6 @@
             color: var(--text-secondary);
         }
 
-        /* ==================== STATS ==================== */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -472,7 +464,6 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* ==================== FEATURES GRID ==================== */
         .features-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -559,13 +550,80 @@
             width: 100%;
             display: block;
             transition: transform 0.4s;
+            cursor: pointer;
         }
 
         .feature-card:hover .feature-image img {
             transform: scale(1.02);
         }
 
-        /* ==================== SHOWCASE ==================== */
+        .image-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            cursor: zoom-out;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .image-modal img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalImageZoom 0.3s ease;
+            cursor: default;
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .image-modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalImageZoom {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         .showcase-item {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -642,13 +700,13 @@
             border: 1px solid var(--border);
             box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.4);
             transition: transform 0.4s ease;
+            cursor: pointer;
         }
 
         .showcase-image:hover img {
             transform: scale(1.02);
         }
 
-        /* ==================== NODE TYPES ==================== */
         .node-categories {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -753,7 +811,6 @@
             z-index: 101;
         }
 
-        /* Colors for node categories */
         .node-category.data .node-category-icon { background: linear-gradient(135deg, #3b82f6, #2563eb); }
         .node-category.flow .node-category-icon { background: linear-gradient(135deg, #f59e0b, #d97706); }
         .node-category.logic .node-category-icon { background: linear-gradient(135deg, #ef4444, #dc2626); }
@@ -763,7 +820,6 @@
         .node-category.event .node-category-icon { background: linear-gradient(135deg, #06b6d4, #0891b2); }
         .node-category.time .node-category-icon { background: linear-gradient(135deg, #f97316, #ea580c); }
 
-        /* ==================== PLUGIN IDE ==================== */
         .ide-preview {
             display: grid;
             grid-template-columns: 250px 1fr 300px;
@@ -894,7 +950,6 @@
             color: var(--text-secondary);
         }
 
-        /* ==================== API SECTION ==================== */
         .api-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -953,7 +1008,6 @@
         .code-block .function { color: #61afef; }
         .code-block .comment { color: #5c6370; }
 
-        /* ==================== INSTALL ==================== */
         .install-content {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1069,7 +1123,6 @@
             }
         }
 
-        /* ==================== CTA ==================== */
         .cta-box {
             position: relative;
             background: linear-gradient(135deg, var(--primary) 0%, #7c3aed 50%, #6366f1 100%);
@@ -1121,7 +1174,6 @@
             background: rgba(255, 255, 255, 0.1);
         }
 
-        /* ==================== FOOTER ==================== */
         footer {
             padding: 60px 0 40px;
             border-top: 1px solid var(--border);
@@ -1171,7 +1223,6 @@
             background: rgba(168, 85, 247, 0.1);
         }
 
-        /* ==================== RESPONSIVE ==================== */
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -1198,7 +1249,6 @@
             .nav-links, .nav-buttons { display: none; }
             .mobile-menu-btn { display: block; }
 
-            /* Mobile menu active state */
             .nav-links.active {
                 display: flex;
                 flex-direction: column;
@@ -1264,7 +1314,6 @@
             }
         }
 
-        /* Animations */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
@@ -2130,6 +2179,12 @@
         </div>
     </footer>
 
+    <!-- Image Modal -->
+    <div class="image-modal" id="imageModal">
+        <div class="image-modal-close" onclick="closeImageModal()">✕</div>
+        <img src="" alt="Preview" id="modalImage">
+    </div>
+
     <script>
         const header = document.getElementById('header');
         window.addEventListener('scroll', () => {
@@ -2334,26 +2389,22 @@
         window.addEventListener('scroll', updateActiveSection);
         window.addEventListener('load', updateActiveSection);
 
-        // ==================== LOAD BLOCKMINE STATS ====================
         async function loadBlockMineStats() {
             try {
                 const res = await fetch('http://185.65.200.184:3000/api/stats');
                 const data = await res.json();
 
-                // Update online bots count
                 const onlineEl = document.getElementById('stat-bots-online');
                 if (onlineEl && data.online_bots_count !== undefined) {
                     onlineEl.textContent = data.online_bots_count;
                 }
 
-                // Update total bots created
                 const totalEl = document.getElementById('stat-total-bots');
                 if (totalEl && data.total_unique_bots_ever !== undefined) {
                     totalEl.textContent = data.total_unique_bots_ever + '+';
                 }
             } catch(e) {
                 console.log('Failed to load BlockMine stats:', e);
-                // Fallback values
                 const onlineEl = document.getElementById('stat-bots-online');
                 const totalEl = document.getElementById('stat-total-bots');
                 if (onlineEl) onlineEl.textContent = '30+';
@@ -2361,8 +2412,45 @@
             }
         }
         loadBlockMineStats();
-        // Refresh stats every 30 seconds
         setInterval(loadBlockMineStats, 30000);
+
+        const imageModal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        function initImageZoom() {
+            const images = document.querySelectorAll('.feature-image img, .showcase-image img');
+            images.forEach(img => {
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openImageModal(this.src);
+                });
+            });
+        }
+
+        function openImageModal(src) {
+            modalImage.src = src;
+            imageModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            imageModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && imageModal.classList.contains('active')) {
+                closeImageModal();
+            }
+        });
+
+        initImageZoom();
     </script>
 </body>
 </html>
